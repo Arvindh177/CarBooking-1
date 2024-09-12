@@ -6,6 +6,7 @@ import CarListScreen from './screens/CarListScreen';
 import CarDetailScreen from './screens/CarDetailScreen';
 import BookingScreen from './screens/BookingScreen';
 import ProfileScreen from './screens/ProfileScreen';
+import RegisterScreen from "./screens/RegisterScreen";
 
 const Stack  = createStackNavigator();
 
@@ -15,6 +16,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Login">
         <Stack.Screen name="Login" component={LoginScreen}/>
+        <Stack.Screen name="Register" component={RegisterScreen}/>
         <Stack.Screen name="Cars" component={CarListScreen}/>
         <Stack.Screen name="CarDetails" component={CarDetailScreen}/>
         <Stack.Screen name="BookCar" component={BookingScreen}/>

@@ -11,6 +11,10 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "extra": {
+        "SUPABASE_URL": "https://kkcdpotdiocosmpkkfpq.supabase.co",
+        "SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtrY2Rwb3RkaW9jb3NtcGtrZnBxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjYwNDk3OTEsImV4cCI6MjA0MTYyNTc5MX0.eSp_UXHCvhUYV6MLiMWOUn-bGB39FmYxyTakehn6cZY"
+      },
     "ios": {
       "supportsTablet": true
     },

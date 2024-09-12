@@ -1,24 +1,31 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, Alert } from 'react-native';
 import { supabase } from '../supabase';
-import { useNavigation } from '@react-navigation/native';
 
-export default function LoginScreen() {
+export default function RegisterScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const navigation = useNavigation();
 
-  const handleLogin = async () => {
-    const { error } = await supabase.auth.signInWithPassword({
+  const handleRegister = async () => {
+    const { data, error } = await supabase.auth.signUp({
       email,
       password,
     });
 
     if (error) {
-      Alert.alert('Login Error', error.message);
+      Alert.alert('Registration Error', error.message);
     } else {
-      Alert.alert('Login Successful!');
-      navigation.navigate('Booking'); // Redirect to the booking screen after login
+      // Insert the user into the users table
+      const { error: dbError } = await supabase
+        .from('users')
+        .insert({ email: data.user.email });
+
+      if (dbError) {
+        Alert.alert('Database Error', dbError.message);
+      } else {
+        Alert.alert('Registration Successful!');
+        navigation.navigate('Login');
+      }
     }
   };
 
@@ -37,9 +44,7 @@ export default function LoginScreen() {
         secureTextEntry
         style={{ marginBottom: 10, borderBottomWidth: 1 }}
       />
-      <Button title="Login" onPress={handleLogin} />
-      <Button title='Register'
-      onPress={()=> navigation.navigate('Register')} />
+      <Button title="Register" onPress={handleRegister} />
     </View>
   );
 }

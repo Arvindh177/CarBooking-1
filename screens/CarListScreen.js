@@ -1,31 +1,38 @@
 import React from "react";
 import { View, Text, Button, FlatList} from 'react-native';
+import { useState, useEffect } from "react";
+import { supabase } from "../supabase";
 
-const cars = [
-    {id: '1', name: 'Suzuki Swift', price: '2000/day'},
-    {id: '2', name: 'Toyota Etios', price: '2500/day'},
-]
+export default function CarListScreen() {
+    const [cars, setCars] = useState([]);
+    
+    useEffect(()=> {
+        const fetchCars = async()=> {
+            const { data, error} = await supabase
+            .from('cars')
+            .select('*')
+            .eq('available', true);
 
-export default function CarListScreen({navigation}) {
+            if(error) {
+                console.error('Error fetching cars:', error);
+            } else {
+                setCars(data);
+            }
+        };
+        fetchCars();
+    },[]);
     return(
         <View>
-            <FlatList
-            data={cars}
-            keyExtractor={(item)=>item.id}
-            renderItem={({ item }) => (
-                <View style={{padding: 10}}>
-                    <Text>
-                        {item.name}
-                    </Text>
-                    <Text>
-                        {item.price}
-                    </Text>
-                    <Button
-                    title="View Details"
-                    onPress={()=> navigation.navigate('CarDetails', {car: item})} />
-                </View>
-            )}> 
-            </FlatList>
-        </View>
+      <FlatList
+        data={cars}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={({ item }) => (
+          <View>
+            <Text>{item.name}</Text>
+            <Text>{item.price_per_day}/day</Text>
+          </View>
+        )}
+      />
+    </View>
     )
 }
